@@ -13,7 +13,7 @@
 # - once you are done send 'exit', or 'quit'
 # - for debug purpose you can connect via 'telnet localhost 11700',
 #   than you can check how daemon reacts on your commands
-# - when debugging it is usefull to run daemon with flags 
+# - when debugging it is usefull to run daemon with flags
 #   --debug --debug-network --debug-hardware
 # --debug-network is needed when you dont want to initialize hardware
 #   so specific hardware modules(BMC2835) will not be loaded
@@ -75,7 +75,7 @@ my %commands = (
 			"Used to switch between ON/OFF and PWD backends for pins. Available backends are: " .
 			join(', ', keys %BACKENDS) . "\n",
 	},
-	# fallback output: if fallback timeout is exceeded, 
+	# fallback output: if fallback timeout is exceeded,
 	'set_fallback_output' =>{
 		help =>	"If fallback timeout is exceeded, server set fallback values as output.\n" .
 			"Useful to stop in case of connection issues.",
@@ -247,14 +247,14 @@ sub select_command {
 		print $sock "Params are ". join(" ", @params)."\n" if ($debug);
 		if (exists $commands{$cmd}){
 			process_command($sock, $commands{$cmd}, @params);
-		} else { 
+		} else {
 			$sock->send("Command '$cmd' is not a valid command, try 'help' to see commands list\n");
 		}
 	}
 }
 
 sub process_command {
-	my $sock = shift; 
+	my $sock = shift;
 	my $cmd = shift;
 	my @args = @_;
 
@@ -347,8 +347,8 @@ sub set_pinouts {
 
 sub update_avg {
 	my $input = shift;
-	my $increment = shift || 0.02;
-	my $start_level = shift || 0.3;
+	my $increment = shift || 0.50;
+	my $start_level = shift || 2.00;
 
 	foreach my $pin (keys %$avg_values) {
 		next unless exists $$input{$pin};
@@ -429,7 +429,7 @@ sub autogenerate_help {
 # service routines
 sub info {
 	my $msg = shift;
-	print "[$$] $msg\n"; 
+	print "[$$] $msg\n";
 }
 
 sub debug {
@@ -443,4 +443,3 @@ This Daemon listens tcp socket and give remote access over TCP/IP to GPIO pins o
 EOF
 exit(0);
 }
-
