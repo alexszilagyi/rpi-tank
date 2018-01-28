@@ -348,13 +348,13 @@ sub set_pinouts {
 sub update_avg {
 	my $input = shift;
 	my $increment = shift || 0.50;
-	my $start_level = shift || 2.00;
+	my $start_level = shift || 3.00;
 
 	foreach my $pin (keys %$avg_values) {
 		next unless exists $$input{$pin};
 		if ($$input{$pin} == 1) {
 			$$avg_values{$pin} = $$avg_values{$pin} + $increment;
-			$$avg_values{$pin} = 1 if $$avg_values{$pin} > 1;
+			$$avg_values{$pin} = 5 if $$avg_values{$pin} > 5;
                         if ($$avg_values{$pin} > 0 && $$avg_values{$pin} < $start_level){
 				$$avg_values{$pin} = $start_level;
 			}
